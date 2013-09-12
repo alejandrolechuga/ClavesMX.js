@@ -4,10 +4,10 @@
 */
 
 function RFC () {
-	"use strict";
+  "use strict";
 
   // VOCALES
-	var vowels = [
+  var vowels = [
       'A'
     , 'E'
     , 'I'
@@ -234,27 +234,27 @@ function RFC () {
   /**
   * @method personaFisica
   * @params Object 
-  * 	{
-  *			paterno : String
-	*			materno : String
-	*			nombre	: String
-	*			nacimiento : Object {
-	*				month : Number,
-	*				year  : Number,
-	*				day		: Number 
-	*			}
-  *		}	
+  *   {
+  *     paterno : String
+  *     materno : String
+  *     nombre  : String
+  *     nacimiento : Object {
+  *       month : Number,
+  *       year  : Number,
+  *       day   : Number 
+  *     }
+  *   } 
   * @return String
   */  
 
   var personaFisica = function(params) {
-  	var 
-  		_RFC				= []
-  	,	paterno			= params.paterno
-  	,	materno			= params.materno
-  	,	nombre			=	params.nombre
-  	, nacimiento  = params.nacimiento
-  	
+    var 
+      _RFC        = []
+    , paterno     = params.paterno
+    , materno     = params.materno
+    , nombre      = params.nombre
+    , nacimiento  = params.nacimiento
+    
     , pattern 
     , found
     , nombres
@@ -268,18 +268,18 @@ function RFC () {
     materno = normalizar(materno);
     nombre  = normalizar(nombre);
 
-  	// Primer caracter de apellido paterno
-  	_RFC.push(paterno[0]);
+    // Primer caracter de apellido paterno
+    _RFC.push(paterno[0]);
 
-  	// Primer vocal del primer del nombre 
-  	pattern = new RegExp('[' + vowels.join('|') + ']');
-  	found = paterno.match(pattern);
-  	if (found) {
-  		_RFC.push(found[0]);
-  	}
+    // Primer vocal del primer del nombre 
+    pattern = new RegExp('[' + vowels.join('|') + ']');
+    found = paterno.match(pattern);
+    if (found) {
+      _RFC.push(found[0]);
+    }
 
-  	// Primer caracter de apellido materno
-  	_RFC.push(materno[0]);
+    // Primer caracter de apellido materno
+    _RFC.push(materno[0]);
 
     // Primer caracter de nombre
     nombres = nombre.split(' ');
@@ -425,14 +425,14 @@ function RFC () {
 
 var rfc = new RFC();
 var resultado = rfc.personaFisica({
-		paterno: 'LECHUGA'
-	,	materno: 'AMADOR'
-	,	nombre:  'RAMÓN ALEJANDRO'
-	, nacimiento: {
-		month : 11,
-		year	: 1985,
-		day		: 14
-	}
+    paterno: 'LECHUGA'
+  , materno: 'AMADOR'
+  , nombre:  'RAMÓN ALEJANDRO'
+  , nacimiento: {
+    month : 11,
+    year  : 1985,
+    day   : 14
+  }
 });
 //LEAR8511147J9
 console.log(" Esperado => " , "LEAR8511147J9");
@@ -529,31 +529,3 @@ var resultado = rfc.personaFisica({
 });
 console.log(" Esperado => " , "MALA700717J54");
 console.log(" Resultado ", resultado, "MALA700717J54" == resultado, resultado.length);
-
-var resultado = rfc.personaFisica({
-    paterno: 'CHAVEZ'
-  , materno: 'DELGADO'
-  , nombre:  'RAFAEL'
-  , nacimiento: {
-    month : 1,
-    year  : 1987,
-    day   : 8
-  }
-});
-console.log(" Esperado => " , "CADR870108QX9");
-console.log(" Resultado ", resultado, "CADR870108QX9" == resultado, resultado.length);
-//September 8, 1988
-
-
-var resultado = rfc.personaFisica({
-    paterno: 'ENCINAS'
-  , materno: 'RODRIGUEZ'
-  , nombre:  'VERO'
-  , nacimiento: {
-    month : 10,
-    year  : 1988,
-    day   : 8
-  }
-});
-console.log(" Esperado => " , "MALA700717J54");
-console.log(" Resultado ", resultado, "CADR870108QX9" == resultado, resultado.length);
