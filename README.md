@@ -21,9 +21,9 @@ pero se pretende tener la siguiente lista. Todo es para que sea de dominio publi
 	  , materno: 'LOPEZ'
 	  , nombre:  'JUAN'
 	  , nacimiento: {
-	    month : 3,
-	    year  : 1963,
-	    day   : 5
+	      month : 3
+	    , year  : 1963
+	    , day   : 5
 	  }
 	});
 	// RFC  => PELJ6303052A9
