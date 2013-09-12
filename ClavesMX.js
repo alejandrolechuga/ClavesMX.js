@@ -247,13 +247,13 @@ function ClavesMX () {
   * @return String
   */  
 
-  var personaFisica = function(params) {
+  var RFCPersonaFisica = function(args) {
     var 
       _RFC        = []
-    , paterno     = params.paterno
-    , materno     = params.materno
-    , nombre      = params.nombre
-    , nacimiento  = params.nacimiento
+    , paterno     = args.paterno
+    , materno     = args.materno
+    , nombre      = args.nombre
+    , nacimiento  = args.nacimiento
     
     , pattern 
     , found
@@ -262,7 +262,8 @@ function ClavesMX () {
     , result; 
     
     //Debug
-    console.log(params);
+    console.log(args);
+    
     // Normalizar Nombre Completo
     paterno = normalizar(paterno);
     materno = normalizar(materno);
@@ -377,6 +378,10 @@ function ClavesMX () {
     return result;  
   };
   
+  var RFCPersonaMoral = function(args) {
+
+  };
+
   var normalizar = function (string) {
     var pattern 
       , match;
@@ -418,6 +423,7 @@ function ClavesMX () {
     return string;
   };
 
-    'personaFisica' : personaFisica      
+  return {
+    'RFCPersonaFisica' : RFCPersonaFisica      
   }
 }
