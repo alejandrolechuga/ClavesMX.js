@@ -7,7 +7,7 @@ function ClavesMX () {
   "use strict";
 
   // VOCALES
-  var vowels = [
+  var vocales = [
       'A'
     , 'E'
     , 'I'
@@ -36,7 +36,7 @@ function ClavesMX () {
   };
 
   // NOMBRES COMUNES
-  var common_names = [
+  var nombres_comunes = [
       'MARIA'
     , 'JOSE'
   ];
@@ -53,7 +53,7 @@ function ClavesMX () {
   ];
 
   // ESTADOS DE MEXICO 
-  var states = {
+  var estados = {
       'AGUASCALIENTES': 'AG'
     , 'BAJA CALIFORNA': 'BC'
   };
@@ -263,7 +263,7 @@ function ClavesMX () {
     
     //Debug
     console.log(args);
-    
+
     // Normalizar Nombre Completo
     paterno = normalizar(paterno);
     materno = normalizar(materno);
@@ -273,7 +273,7 @@ function ClavesMX () {
     _RFC.push(paterno[0]);
 
     // Primer vocal del primer del nombre 
-    pattern = new RegExp('[' + vowels.join('|') + ']');
+    pattern = new RegExp('[' + vocales.join('|') + ']');
     found = paterno.match(pattern);
     if (found) {
       _RFC.push(found[0]);
@@ -289,7 +289,7 @@ function ClavesMX () {
     } else {
 
     // Si tienen un segundo nombre
-      pattern = new RegExp('(' + common_names.join('|') + ')');
+      pattern = new RegExp('(' + nombres_comunes.join('|') + ')');
       found = nombres[0].match(pattern);
 
     // Si hace match con uno de los nombres comunes
@@ -308,17 +308,19 @@ function ClavesMX () {
     _RFC.push( anio > 9 
       ? anio 
       : '0' + anio
-      );
+    );
 
     // Dia del Mes
     _RFC.push(nacimiento.month > 9 
       ? nacimiento.month 
-      : '0' + nacimiento.month);
+      : '0' + nacimiento.month
+    );
 
     // Dia de Nacimiento
     _RFC.push(nacimiento.day > 9
       ? nacimiento.day
-      : '0' + nacimiento.day);    
+      : '0' + nacimiento.day
+    );    
 
     // CLAVE DIFERENCIADORA DE HOMONIMIA
     var nombre_completo = [paterno, materno, nombre].join(' ')
@@ -357,16 +359,22 @@ function ClavesMX () {
       , accum = 0;
 
     // Asignacion de valores por caracter del RFC 
+    // Recorre los cada caracter y toma la posicion de forma inversa
+    // Pi => [13][12][11][10]...[2]
+    // V  => tabla_cod_verif_rfc['A'] 
+    // V12 * (Pi13 + 1) + V11 * (Pi12 + 1) ... V0 * (Pi0 + 1)
     for (var i = 0; i < rfc_length; i++) {
-      accum += parseInt(tabla_cod_verif_rfc[rfc_string[i]]) * ((rfc_length+1)-i);
+      accum += parseInt(tabla_cod_verif_rfc[rfc_string[i]]) * ((rfc_length + 1) - i);
     }
 
+    // Condiciones de digito verificador
     var coef = Math.floor(accum  / 11)
       , residuo = (accum % 11);
-      console.log('residuo', residuo);
+
     if (residuo == 0) {
       _RFC.push(0);
     } else if (residuo == 10 || residuo == 1) {
+       // La comparacion con 1 cae en este caso por que 11-1 = 10
       _RFC.push("A");
     } else if (residuo > 0) {
       _RFC.push(11 - residuo);
@@ -374,12 +382,24 @@ function ClavesMX () {
 
     // _RFC to String 
     result = _RFC.join(''); 
+
+    // Limpiar palabras inconvenientes 
+    // @todo Este deberia ser antes de HOMOCLAVE ?
     result = limpiarPalabras(result);
     return result;  
   };
   
   var RFCPersonaMoral = function(args) {
-
+    var
+      _RFC        = []
+      , nombre    = args.nombre
+      , fecha     = args.fecha;
+      
+      nombre = nombre.toUpperCase();
+      nombre = normalizar(nombre);
+      
+      console.log(nombre);
+    return nombre;
   };
 
   var normalizar = function (string) {
@@ -424,6 +444,7 @@ function ClavesMX () {
   };
 
   return {
-    'RFCPersonaFisica' : RFCPersonaFisica      
+      'RFCPersonaFisica' : RFCPersonaFisica
+    , 'RFCPersonaMoral'  : RFCPersonaMoral     
   }
 }
