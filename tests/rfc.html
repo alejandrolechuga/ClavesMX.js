@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script type="text/javascript" src="../ClavesMX.js"></script>
+		<script type="text/javascript">
+
+			var rfc = new RFC();
+			var resultado = rfc.personaFisica({
+			    paterno: 'LECHUGA'
+			  , materno: 'AMADOR'
+			  , nombre:  'RAMÓN ALEJANDRO'
+			  , nacimiento: {
+			    month : 11,
+			    year  : 1985,
+			    day   : 14
+			  }
+			});
+			console.log(" Esperado => " , "LEAR8511147J9");
+			console.log(" Resultado ", resultado, "LEAR8511147J9" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'DE PEREZ'
+			  , materno: 'LOPEZ'
+			  , nombre:  'JUAN'
+			  , nacimiento: {
+			    month : 3,
+			    year  : 1963,
+			    day   : 5
+			  }
+			});
+			console.log(" Esperado => " , "PELJ6303052A9");
+			console.log(" Resultado ", "PELJ6303052A9", resultado == "PELJ6303052A9", resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'GOMEZ'
+			  , materno: 'DIAZ'
+			  , nombre:  'EMMA'
+			  , nacimiento: {
+			    month : 12,
+			    year  : 1956,
+			    day   : 31
+			  }
+			});
+			console.log(" Esperado => " , "GODE561231GR8");
+			console.log(" Resultado ", resultado, "GODE561231GR8" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'DIAZ'
+			  , materno: 'DE LOS SANTOS'
+			  , nombre:  'MARIA LUISA'
+			  , nacimiento: {
+			    month : 10,
+			    year  : 2001,
+			    day   : 17
+			  }
+			});
+
+			console.log(" Esperado => " , "DISL011001754R1");
+			console.log(" Resultado ", resultado, "DISL011001754R1" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'GONZALEZ'
+			  , materno: 'TORRES'
+			  , nombre:  'JUAN'
+			  , nacimiento: {
+			    month : 5,
+			    year  : 1978,
+			    day   : 12
+			  }
+			});
+			console.log(" Esperado => " , "GOTJ7805125T6");
+			console.log(" Resultado ", resultado, "GOTJ7805125T6" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'PEREZ'
+			  , materno: 'GARCIA'
+			  , nombre:  'JOSE'
+			  , nacimiento: {
+			    month : 1,
+			    year  : 1901,
+			    day   : 1
+			  }
+			});
+			console.log(" Esperado => " , "PEGJ010101R64");
+			console.log(" Resultado ", resultado, "PEGJ010101R64" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'JUAREZ'
+			  , materno: 'MORELOS'
+			  , nombre:  'MANUEL'
+			  , nacimiento: {
+			    month : 3,
+			    year  : 1942,
+			    day   : 13
+			  }
+			});
+			console.log(" Esperado => " , "JUMM420313PA9");
+			console.log(" Resultado ", resultado, "JUMM420313PA9" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'MAYO'
+			  , materno: 'LARA'
+			  , nombre:  'ALEJANDRO'
+			  , nacimiento: {
+			    month : 7,
+			    year  : 1970,
+			    day   : 17
+			  }
+			});
+			console.log(" Esperado => " , "MALA700717J54");
+			console.log(" Resultado ", resultado, "MALA700717J54" == resultado, resultado.length);
+
+			var resultado = rfc.personaFisica({
+			    paterno: 'TINOCO'
+			  , materno: 'LARA'
+			  , nombre:  'ALEJANDRO'
+			  , nacimiento: {
+			    month : 7,
+			    year  : 1970,
+			    day   : 17
+			  }
+			});
+			console.log(" Esperado => " , "MALA700717J54");
+			console.log(" Resultado ", resultado, "MALA700717J54" == resultado, resultado.length);
+
+
+		</script>
+	</body>
+</html>
