@@ -11,12 +11,15 @@ pero se pretende tener la siguiente lista. Todo es para que sea de dominio publi
 
 <h4> Como utilizar ClavesMX.js </h4>
 <code>
+```js
   // Se genera una instancia 
   var CMX = new ClavesMX();
+```
 </code>
 
 <h4>RFC Persona fisica.</h4>
 <code>
+```js
  	var resultado = CMX.RFCPersonaFisica({
 	    paterno: 'DE PEREZ'
 	  , materno: 'LOPEZ'
@@ -28,4 +31,5 @@ pero se pretende tener la siguiente lista. Todo es para que sea de dominio publi
 	  }
 	});
 	console.log(" Resultado ", resultado);
+```
 </code>
