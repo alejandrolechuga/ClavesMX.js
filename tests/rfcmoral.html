@@ -6,14 +6,119 @@
 		<script type="text/javascript">
 
 			var CMX = new ClavesMX();
-			CMX.RFCPersonaMoral({
-					nombre: 'Sonora Industrial Azucarera, S. de. R.L.'
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Sonora Industrial Azucarera, S. de R.L.'
 				,	fecha: {
-					month : 3,
-			    year  : 1963,
-			    day   : 5
+					month : 11,
+			    year  : 1982,
+			    day   : 29
 				}
 			});
+			console.log(resultado, resultado == 'SIA821129');
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Lubricantes y Filtros, S.A.'
+				,	fecha: {
+					month : 11,
+			    year  : 1957,
+			    day   : 30
+				}
+			});
+			console.log(resultado, resultado == 'LFI571130');
+			//Instrumentos Bristol, S.A. de C.V. 700104
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Instrumentos Bristol, S.A. de C.V.'
+				,	fecha: {
+					month : 1,
+			    year  : 1970,
+			    day   : 04
+				}
+			});
+			console.log(resultado, resultado == "IBR700104");
+			//Herrajes, Cortinas y Maquinaria, S.A.     HCM-841122
+
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Herrajes, Cortinas y Maquinaria, S.A.'
+				,	fecha: {
+					month : 11,
+			    year  : 1984,
+			    day   : 22
+				}
+			});
+			console.log(resultado , resultado == "HCM841122");
+
+			//Champion Mexicana de Bujías, S.A.
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Champion Mexicana de Bujías, S.A.'
+				,	fecha: {
+					month : 07,
+			    year  : 1983,
+			    day   : 02
+				}
+			});
+			console.log(resultado , resultado == "CMB830702");
+
+			// U.S. Ruber Mexicana, S.A.  USR-860201
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'U.S. Ruber Mexicana, S.A.'
+				,	fecha: {
+					month : 02,
+			    year  : 1986,
+			    day   : 01
+				}
+			});
+			console.log(resultado , resultado == "USR860201");
+
+			// H. Prieto y Martínez, S. de R.L.
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'H. Prieto y Martínez, S. de R.L.'
+				,	fecha: {
+					month : 12,
+			    year  : 1984,
+			    day   : 21
+				}
+			});
+			console.log(resultado , resultado == "HPM841221");
+			// Aceros Ecatepec, S.A. AEC-890130
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Aceros Ecatepec, S.A.'
+				,	fecha: {
+					month : 1,
+			    year  : 1989,
+			    day   : 30
+				}
+			});
+			console.log(resultado , resultado == "AEC890130");
+			//Arsuyama, S.A.		ARS-821129
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Arsuyama, S.A.'
+				,	fecha: {
+					month : 11,
+			    year  : 1982,
+			    day   : 29
+				}
+			});
+			console.log(resultado , resultado == "ARS821129");
+
+			// Al, S.A.          ALX-830101
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Al, S.A.'
+				,	fecha: {
+					month : 1,
+			    year  : 1983,
+			    day   : 1
+				}
+			});
+			console.log(resultado , resultado == "ALX830101");
+			// Z, S.A.            ZXX-860110
+			var resultado = CMX.RFCPersonaMoral({
+					nombre: 'Z, S.A.'
+				,	fecha: {
+					month : 1,
+			    year  : 1986,
+			    day   : 10
+				}
+			});
+			console.log(resultado , resultado == "ZXX860110");
 		</script>
 	</body>
 </html>

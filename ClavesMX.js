@@ -5,7 +5,7 @@
 
 function ClavesMX () {
   "use strict";
-
+  console.log(Array(3).join('x'));
   // VOCALES
   var vocales = [
       'A'
@@ -231,6 +231,25 @@ function ClavesMX () {
     , 'Ñ': '38'
   };
 
+  var abreviaturas_sociedad = [
+      'S. EN N.C.'
+    , 'S. EN C.V.'
+    , 'S. DE R.L.'
+    , 'S. EN C. POR A.'
+    , 'S.A. DE C.V.'
+    , 'S.N.C.'
+    , 'S.C.L.'
+    , 'S.C.S.'
+    , 'S.A.'
+    , 'S.C.'
+    , 'A.C.'
+    , 'A. EN P.'
+    , 'Compañía'
+    , 'Cia.'
+    , 'Sociedad'
+    , 'Soc.'
+  ];
+
   /**
   * @method personaFisica
   * @params Object 
@@ -303,24 +322,12 @@ function ClavesMX () {
       }
     }
     
-    // Los dos ultimos digitos de 'nacimiento.year'
-    var anio = nacimiento.year % 100;
-    _RFC.push( anio > 9 
-      ? anio 
-      : '0' + anio
-    );
-
-    // Dia del Mes
-    _RFC.push(nacimiento.month > 9 
-      ? nacimiento.month 
-      : '0' + nacimiento.month
-    );
-
-    // Dia de Nacimiento
-    _RFC.push(nacimiento.day > 9
-      ? nacimiento.day
-      : '0' + nacimiento.day
-    );    
+    // FORMATO DE FECHA
+    _RFC.push(formatoFecha(
+        nacimiento.year
+      , nacimiento.month
+      , nacimiento.day
+    ));
 
     // CLAVE DIFERENCIADORA DE HOMONIMIA
     var nombre_completo = [paterno, materno, nombre].join(' ')
@@ -393,15 +400,91 @@ function ClavesMX () {
     var
       _RFC        = []
       , nombre    = args.nombre
-      , fecha     = args.fecha;
+      , fecha     = args.fecha
+      , nombres   = [];
       
+      console.log("nombre ", nombre);
+      nombre = trim(nombre);
       nombre = nombre.toUpperCase();
+      nombre = removerAbreviaturasSociedad(nombre);
       nombre = normalizar(nombre);
-      
-      console.log(nombre);
-    return nombre;
+      nombre = trim(nombre);
+
+      // Convertir puntos de Abreviaturas a espacios
+      nombre = nombre.replace(/\./g,' ');
+
+      // Degar solo un espacio por palabra
+      nombre = nombre.replace(/\s+/g,' ');
+
+      // Separar Palabras del Nombre 
+      nombres = nombre.split(' ');
+      console.log(nombres);
+      // Si el nombre consta de 3 palabras o mas 
+      // seran el primero caractere de cada palabras
+      if (nombres.length > 2) {
+        _RFC.push(nombres[0].charAt(0));  
+        _RFC.push(nombres[1].charAt(0));
+        _RFC.push(nombres[2].charAt(0));
+
+      // Si el nombre consta de 2 palabras 
+      // seran el primer caracter de cada palabra y el segundo de la segunda palabra 
+      } else if (nombres.length == 2) {
+        _RFC.push(nombres[0].charAt(0));  
+        _RFC.push(nombres[1].charAt(0));
+        _RFC.push(nombres[1].charAt(1));
+      } else {
+        if (nombres[0].length > 2) {
+      // En el caso que sea una sola palabra
+      // seran los 3 caracteres de la palabra
+          _RFC.push(nombres[0].charAt(0));  
+          _RFC.push(nombres[0].charAt(1));
+          _RFC.push(nombres[0].charAt(2));
+        } else {
+          nombres[0] += Array(4 - (nombres[0].length)).join('X');
+          _RFC.push(nombres[0]);
+        }
+      }
+
+      // Format de fecha 
+      _RFC.push(formatoFecha(
+          fecha.year
+        , fecha.month
+        , fecha.day
+      ));
+
+      //console.log(_RFC.join(''));
+    return _RFC.join('');
   };
 
+  var formatoFecha = function (anio, mes, dia) {
+    var fecha = [];
+    // Los dos ultimos digitos del Año
+    anio = anio % 100;
+    fecha.push( anio > 9 
+      ? anio 
+      : '0' + anio
+    );
+
+    // Dia del Mes
+    fecha.push(mes > 9 
+      ? mes 
+      : '0' + mes
+    );
+
+    // Dia de Nacimiento
+    fecha.push(dia > 9
+      ? dia
+      : '0' + dia
+    ); 
+
+    return fecha.join('');
+  };
+
+  /**
+  * @method normalizar
+  * @param String
+  * @return String
+  */
   var normalizar = function (string) {
     var pattern 
       , match;
@@ -419,12 +502,13 @@ function ClavesMX () {
     string = string.replace(pattern, '');
 
     // Remover Apostofre y puntos
-
     return string;
   };
 
   /**
-  * @method: limpiarPalabras
+  * @method limpiarPalabras
+  * @param String
+  * @return String
   */
   var limpiarPalabras = function (string) {
     var pattern
@@ -443,6 +527,21 @@ function ClavesMX () {
     return string;
   };
 
+  /**
+  * @method removerAbreviaturasSociedad
+  * @param String 
+  * @return String
+  */
+  var removerAbreviaturasSociedad = function(string) {
+    var pattern = RegExp('(' + abreviaturas_sociedad.join('|') + ')');
+    string = string.replace(pattern, '');
+    string = string.replace(/,/g,'');
+    return string;
+  };
+
+  var trim = function(string){
+    return string.replace(/^\s+|\s+$/g, "");
+  }
   return {
       'RFCPersonaFisica' : RFCPersonaFisica
     , 'RFCPersonaMoral'  : RFCPersonaMoral     
