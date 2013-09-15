@@ -4,8 +4,8 @@
 pero se pretende tener la siguiente lista. Todo es para que sea de dominio publico en especial a la comunidad de desarroladores</p>
 
 <ul>
-  <li>RFC para persona fisica</li>
-  <li>RFC para persona moral</li>
+  <li>RFC para Persona Física.</li>
+  <li>RFC para Persona Moral</li>
   <li>CURP</li>
 </ul>
 
