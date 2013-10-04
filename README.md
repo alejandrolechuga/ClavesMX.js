@@ -46,3 +46,22 @@ pero se pretende tener la siguiente lista. Todo es para que sea de dominio publi
 	// RFC => SIA821129
 </script>
 ```
+<h4>RFC Persona Moral</h4>
+```html
+<script>
+	var CMX = new ClavesMX();
+	var resultado = CMX.CURP({
+	    paterno: 'LECHUGA'
+	  , materno: 'AMADOR'
+	  , nombre:  'RAMÓN ALEJANDRO'
+	  , nacimiento: {
+	    month : 11,
+	    year  : 1985,
+	    day   : 14
+	  }
+	  ,	sexo: 'H'
+	  , estado: 'BAJA CALIFORNIA'
+	});
+	// CURP => LEAR851114HBCCMM
+</script>
+```
