@@ -46,7 +46,7 @@ pero se pretende tener la siguiente lista. Todo es para que sea de dominio publi
 	// RFC => SIA821129
 </script>
 ```
-<h4>RFC Persona Moral</h4>
+<h4>CURP</h4>
 ```html
 <script>
 	var CMX = new ClavesMX();
