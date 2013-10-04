@@ -1,4 +1,6 @@
 <h3>ClavesMX.js</h3>
+@TODO Eliminar Palabras inconvenientes de la clave CURP 
+@TODO Test con nombres comunes 
 
 <p>ClavesMX.js es una pequeña libreria para generar claves unicas utilizadas en documentos oficiales en México aún falta hacer una serie de pruebas con datos reales para comparar.</p>
 
