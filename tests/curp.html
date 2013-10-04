@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script type="text/javascript" src="../ClavesMX.js"></script>
+		<script type="text/javascript">
+
+			var CMX = new ClavesMX();
+			var resultado = CMX.CURP({
+			    paterno: 'LECHUGA'
+			  , materno: 'AMADOR'
+			  , nombre:  'RAMÓN ALEJANDRO'
+			  , nacimiento: {
+			    month : 11,
+			    year  : 1985,
+			    day   : 14
+			  }
+			  ,	sexo: 'H'
+			  , estado: 'BAJA CALIFORNIA'
+			});
+
+			console.log(" Esperado => " , "LEAR851114HBCCMM09");
+			console.log(" Resultado ", resultado, "LEAR851114HBCCMM09" == resultado, resultado.length);
+		</script>
+	</body>
+</html>

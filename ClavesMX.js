@@ -1,11 +1,10 @@
 /**
-* @class RFC
-* @developer Alejandro Lechuga
+* @class ClavesMX
 */
 
 function ClavesMX () {
   "use strict";
-  console.log(Array(3).join('x'));
+
   // VOCALES
   var vocales = [
       'A'
@@ -41,6 +40,41 @@ function ClavesMX () {
     , 'JOSE'
   ];
   
+  // Nombres comunes del CURP 
+  var nombres_comunes_CURP = [
+      'MA.'
+    , 'MA'
+    , 'J.'
+    , 'J'
+  ];
+
+  //Concatena los nombres comunes con los del CURP 
+  nombres_comunes_CURP = nombres_comunes.concat(nombres_comunes_CURP);
+
+  // @todo agregar esta validacion a CURP
+  // Nombres compuestos preposición, conjunción, contracción
+  var nombres_especiales_CURP = [
+      'DA'
+    , 'DAS'
+    , 'DE'
+    , 'DEL'
+    , 'DER'
+    , 'DI'
+    , 'DIE'
+    , 'DD'
+    , 'EL'
+    , 'LA'
+    , 'LOS'
+    , 'LAS'
+    , 'LE'
+    , 'LES'
+    , 'MAC'
+    , 'MC'
+    , 'VAN'
+    , 'VON'
+    , 'Y'
+  ];
+
   // CARACTERES VALIDOS PARA NOMBRE
   var caracteres_persona_fisica = [
       '´'
@@ -52,11 +86,6 @@ function ClavesMX () {
   
   ];
 
-  // ESTADOS DE MEXICO 
-  var estados = {
-      'AGUASCALIENTES': 'AG'
-    , 'BAJA CALIFORNA': 'BC'
-  };
 
   // PALABRAS INCONVENIENTES
   var palabras_incov = {
@@ -231,6 +260,7 @@ function ClavesMX () {
     , 'Ñ': '38'
   };
 
+  // Abreviaturas validas en RFC 
   var abreviaturas_sociedad = [
       'S. EN N.C.'
     , 'S. EN C.V.'
@@ -249,6 +279,42 @@ function ClavesMX () {
     , 'Sociedad'
     , 'Soc.'
   ];
+
+  // ESTADOS DE MEXICO 
+  var estados = {
+      'AGUASCALIENTES':     'AS'
+    , 'BAJA CALIFORNIA':    'BC'
+    , 'BAJA CALIFORNIA SUR':'BS'
+    , 'CAMPECHE':           'CC'
+    , 'COAHUILA':           'CL'
+    , 'COLIMA':             'CM'
+    , 'CHIAPAS':            'CS'
+    , 'CHIHUAHUA':          'CH'
+    , 'DISTRITO':           'DF'
+    , 'DURANGO':            'DU'
+    , 'GUANAJUATO':         'GT'
+    , 'GUERRERO':           'GR'
+    , 'HIDALGO':            'HG'
+    , 'JALISCO':            'JC'
+    , 'ESTADO DE MEXICO':   'MC'
+    , 'MICHOACAN':          'MN'
+    , 'MORELOS':            'MS'
+    , 'NAYARIT':            'NT'
+    , 'NUEVO LEON':         'NL'
+    , 'OAXACA':             'OC'
+    , 'PUEBLA':             'PL'
+    , 'QUERETARO':          'QT'
+    , 'QUINTANA ROO':       'QR'
+    , 'SAN LUIS POTOSI':    'SP'
+    , 'SINALOA':            'SL'
+    , 'SONORA':             'SR'
+    , 'TABASCO':            'TC'
+    , 'TAMAULIPAS':         'TS'
+    , 'TLAXCALA':           'TL'
+    , 'VERACRUZ':           'VZ'
+    , 'YUCATAN':            'YN'
+    , 'ZACATECAS':          'ZS'
+  };
 
   /**
   * @method personaFisica
@@ -279,9 +345,6 @@ function ClavesMX () {
     , nombres
 
     , result; 
-    
-    //Debug
-    console.log(args);
 
     // Normalizar Nombre Completo
     paterno = normalizar(paterno);
@@ -395,7 +458,12 @@ function ClavesMX () {
     result = limpiarPalabras(result);
     return result;  
   };
-  
+
+  /**
+  * @method RFCPersonaMoral
+  * @param args Object
+  * @return String
+  */
   var RFCPersonaMoral = function(args) {
     var
       _RFC        = []
@@ -403,7 +471,6 @@ function ClavesMX () {
       , fecha     = args.fecha
       , nombres   = [];
       
-      console.log("nombre ", nombre);
       nombre = trim(nombre);
       nombre = nombre.toUpperCase();
       nombre = removerAbreviaturasSociedad(nombre);
@@ -418,7 +485,6 @@ function ClavesMX () {
 
       // Separar Palabras del Nombre 
       nombres = nombre.split(' ');
-      console.log(nombres);
       // Si el nombre consta de 3 palabras o mas 
       // seran el primero caractere de cada palabras
       if (nombres.length > 2) {
@@ -456,6 +522,124 @@ function ClavesMX () {
     return _RFC.join('');
   };
 
+  /**
+  * @method CURP
+  * @param args Object
+  * @return String
+  * @todo [x] Agregar nombres comunes al arreglo para remplazar
+  * @todo [ ] Sustituir el caracter [Ñ] de nombres, apellidos 
+  * @todo Si el primero apellido no tiene vocal interna agregar X
+  * @todo un solo apellido el sistema agregara X
+  * @todo si la palabra se forma es antisonante a la segunda palabra se le agrega X
+  */
+  var CURP = function (args) {
+    var 
+        _CURP = []
+      , paterno     = args.paterno
+      , materno     = args.materno
+      , nombre      = args.nombre
+      , nacimiento  = args.nacimiento
+      , sexo        = args.sexo
+      , estado      = args.estado
+
+      , nombres
+      , pattern
+      , found;
+
+    // Separar Multiples Nombres 
+    nombres = nombre.split(' ');
+    
+    // Si el primer caracter de uno de los apellidos o nombre es [Ñ] remplazar por [X]
+    if (paterno[0] === 'Ñ') {
+      paterno = 'X' + paterno.slice(1);
+    }
+
+    _CURP.push(paterno[0]);
+
+    // Si el segundo caracter del apellido es  uno de estos [Ñ],[/],[-],[.] remplazar por [X]
+    if (paterno[1].match(/(Ñ|\.|\/)/)) {
+      paterno = paterno.slice(0,1) + 'X' + paterno.slice(2);
+    }
+    /// @todo eliminar el primer caracter
+    // Primer vocal del primer del nombre 
+    pattern = new RegExp('[' + vocales.join('|') + ']');
+    found = paterno.match(pattern);
+    if (found) {
+      _CURP.push(found[0]);
+    }
+
+    if (materno[0] === 'Ñ') {
+      materno = 'X' + materno.slice(1);
+    }
+
+    _CURP.push(materno[0]); 
+
+    // Verificar que el primer caracter de alguno de los nombres no sea [Ñ]
+    var i = nombres.length;
+    while(i--) {
+      if (nombres[i][0] === 'Ñ') {
+        nombres[i] = 'X' + nombres[i].slice(1);   
+      }
+    }
+
+    if (nombres.length > 1) {
+      //Revisar si el primer nombre es común 
+      pattern = new RegExp('(' + nombres_comunes_CURP.join('|') + ')');
+      found = nombres[0].match(pattern);
+      if (found) {
+        // Sí se encuentra un nombre común utilizar segundo nombre
+        _CURP.push(nombres[1][0]);
+      } else {
+        _CURP.push(nombres[0][0]);
+      }
+    } else {
+      _CURP.push(nombres[0][0]);
+    }
+
+    // Formato de fecha 
+    _CURP.push(formatoFecha(
+        nacimiento.year
+      , nacimiento.month
+      , nacimiento.day
+    ));
+
+    // H ó M
+    _CURP.push(sexo);
+
+    // Entidad Federativa de Nacimiento
+    _CURP.push(estados[estado]);   
+
+    // Primera Consonante interna del Apellido Paterno
+    pattern = new RegExp('[^' + vocales.join('|') + ']');
+    found = paterno.slice(1).match(pattern);
+    if (found) {
+      _CURP.push(found[0]);
+    }
+
+    // Primera Consonante interna del Nombre
+    found = null;
+    found = nombres[0].slice(1).match(pattern);
+    if (found) {
+      _CURP.push(found[0]);
+    }
+
+    // Primera Consonante interna del Apellido Materno
+    found = null;
+    found = materno.slice(1).match(pattern);
+    if (found) {
+      _CURP.push(found[0]);
+    }
+
+    return _CURP.join('');
+  };
+
+  /**
+  * @method formatoFecha
+  * @param anio Number 
+  * @param mes Number
+  * @param dia Number
+  * @return String 
+  */
   var formatoFecha = function (anio, mes, dia) {
     var fecha = [];
     // Los dos ultimos digitos del Año
@@ -496,12 +680,22 @@ function ClavesMX () {
         string = string.replace(caracter, caracteres_esp[caracter]);
       }
     }
-
-    // Remover Articulos
-    pattern = new RegExp('(' + articulos.join('|') + ')\\s','g');
-    string = string.replace(pattern, '');
+    // Remover articulos 
+    string = removerArticulos(string);
 
     // Remover Apostofre y puntos
+    return string;
+  };
+
+  /**
+  * @method removerArticulos
+  * @param String
+  * @return String 
+  */
+  var removerArticulos = function (string) {
+        // Remover Articulos
+    var pattern = new RegExp('(' + articulos.join('|') + ')\\s','g');
+    string = string.replace(pattern, '');
     return string;
   };
 
@@ -539,11 +733,20 @@ function ClavesMX () {
     return string;
   };
 
+  /**
+  * @method trim
+  * @param String
+  * @return String
+  * @description Remueve los espacios en blanco al inicio y final de la cadena
+  */
   var trim = function(string){
     return string.replace(/^\s+|\s+$/g, "");
   }
+
+  // Returns Public Methods
   return {
       'RFCPersonaFisica' : RFCPersonaFisica
-    , 'RFCPersonaMoral'  : RFCPersonaMoral     
+    , 'RFCPersonaMoral'  : RFCPersonaMoral
+    , 'CURP'             : CURP     
   }
 }
