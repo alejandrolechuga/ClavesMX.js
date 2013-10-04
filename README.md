@@ -47,6 +47,7 @@ pero se pretende tener la siguiente lista. Todo es para que sea de dominio publi
 </script>
 ```
 <h4>CURP</h4>
+La clave CURP consta de 18 caracteres desafortunadamente los 2 últimos caracteres son asignados por el gobierno y no vienen el algoritmo para generarlo.
 ```html
 <script>
 	var CMX = new ClavesMX();
